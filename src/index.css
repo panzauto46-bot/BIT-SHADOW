@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-shadow-950: #0a0412;
+  --color-shadow-900: #12082a;
+  --color-shadow-800: #1a0e3e;
+  --color-shadow-700: #2d1666;
+  --color-shadow-600: #4a2299;
+  --color-shadow-500: #7c3aed;
+  --color-shadow-400: #a78bfa;
+  --color-shadow-300: #c4b5fd;
+  --color-btc-500: #f7931a;
+  --color-btc-400: #ffa94d;
+  --color-btc-600: #e07800;
+  --color-vault-green: #22c55e;
+  --color-vault-red: #ef4444;
+  --color-vault-blue: #3b82f6;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(124, 58, 237, 0.3), 0 0 10px rgba(124, 58, 237, 0.1); }
+  50% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.6), 0 0 40px rgba(124, 58, 237, 0.3); }
+}
+
+@keyframes shield-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes scan-line {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+@keyframes data-stream {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-shield-rotate { animation: shield-rotate 8s linear infinite; }
+.animate-scan-line { animation: scan-line 2s linear infinite; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0412; }
+::-webkit-scrollbar-thumb { background: #4a2299; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+
+* { scrollbar-width: thin; scrollbar-color: #4a2299 #0a0412; }
