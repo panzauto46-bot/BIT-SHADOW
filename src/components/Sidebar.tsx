@@ -70,7 +70,7 @@ export function Sidebar({ activeTab, setActiveTab, walletConnected, starknetId, 
             <span className="text-xs font-medium text-vault-green">Connected</span>
           </div>
           <p className="mb-1 text-sm font-semibold text-white">{starknetId}</p>
-          <p className="text-[10px] text-shadow-500">Starknet Mainnet</p>
+          <p className="text-[10px] text-shadow-500">Starknet Sepolia</p>
           <button
             onClick={disconnectWallet}
             className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-vault-red/30 py-2 text-xs text-vault-red transition-colors hover:bg-vault-red/10"

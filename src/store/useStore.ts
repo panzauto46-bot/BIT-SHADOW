@@ -143,13 +143,8 @@ export function useAppStore() {
       return;
     }
 
-    // Step 3: No real wallets found → Enter Demo Mode automatically
-    // Uses the deployed contract admin address for realistic demo
-    const demoAddress = '0x04a3B6...c9F2';
-    setWalletConnected(true);
-    setWalletAddress('0x04a3B6e8d1f7C2a9E5b0D4c8F1A7e3B6d9C2f5a8E1b4D7c0A3f6E9b2C5d8F1');
-    setStarknetId(demoAddress);
-    setBitAddress('bc1qxy2k...w508d');
+    // Step 3: No wallet found — show helpful message
+    alert("No wallet detected.\n\nPlease install Argent X or Braavos extension for Starknet, or Xverse for Bitcoin.");
   }, []);
 
   const disconnectWallet = useCallback(() => {
@@ -157,6 +152,19 @@ export function useAppStore() {
     setWalletAddress('');
     setBitAddress('');
     setStarknetId('');
+
+    // Try to disconnect from Starknet provider
+    try {
+      const starknet = (window as any).starknet || (window as any).starknet_argentX || (window as any).starknet_braavos;
+      if (starknet && starknet.disable) {
+        starknet.disable();
+      }
+      if (starknet && starknet.off) {
+        starknet.off('accountsChanged', () => { });
+      }
+    } catch (e) {
+      console.warn("Provider disconnect:", e);
+    }
   }, []);
 
   const addEscrow = useCallback((newEscrow: EscrowTransaction) => {
