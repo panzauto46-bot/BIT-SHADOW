@@ -120,10 +120,12 @@ export function useAppStore() {
         // Display Starknet Address (or .stark name in future)
         const shortAddr = sAddr.length > 10 ? sAddr.substring(0, 6) + '...' + sAddr.substring(sAddr.length - 4) : sAddr;
         setStarknetId(shortAddr);
+        alert(`Starknet Connected!\nAddress: ${shortAddr}`);
       } else if (bAddr) {
         // Fallback: If only Bitcoin connected, use Bitcoin address as primary ID
         const shortBtc = bAddr.length > 10 ? bAddr.substring(0, 6) + '...' + bAddr.substring(bAddr.length - 4) : bAddr;
         setStarknetId(shortBtc);
+        alert(`Bitcoin Wallet Connected!\nAddress: ${shortBtc}`);
       }
 
       if (bAddr) {
