@@ -86,7 +86,7 @@ BIT-SHADOW combines:
 - **Synthetic Minting**: 1:1 Pegged sBTC representation on L2
 
 ### 3. The Shadow UI — Frontend
-- **Futuristic Dark Mode**: "Shadow Purple" & "Bitcoin Orange" aesthetic
+- **Futuristic & Dynamic Theme**: Switch between immersive **Shadow Dark** and clean **Solar Light** modes.
 - **Dashboard**: Real-time portfolio overview with analytics
 - **Confidential Transaction Builder**: Encrypts metadata (AES-256-GCM) client-side
 - **Real-time Tracker**: Monitors ZK-proof generation and bridge confirmations
@@ -104,6 +104,7 @@ BIT-SHADOW combines:
 | Layer | Technology |
 |-------|-----------|
 | **Frontend** | React 19, TypeScript, Vite 7, Tailwind CSS 4 |
+| **Styling** | Custom CSS Variables for Dynamic Theming (Dark/Light) |
 | **Animations** | Framer Motion |
 | **Icons** | Lucide React |
 | **Smart Contract** | Cairo (Starknet) |
@@ -174,7 +175,7 @@ BIT-SHADOW/
 │   │   ├── CreateEscrow.tsx # Escrow creation flow
 │   │   ├── EscrowList.tsx   # Escrow management
 │   │   ├── PrivacyShield.tsx# Privacy tools
-│   │   ├── Header.tsx       # Navigation header
+│   │   ├── Header.tsx       # Navigation header containing Theme Toggle
 │   │   └── Sidebar.tsx      # Side navigation
 │   ├── lib/                 # Service libraries
 │   ├── store/               # State management
@@ -182,7 +183,7 @@ BIT-SHADOW/
 │   ├── utils/               # Utility functions
 │   ├── App.tsx              # Main app component
 │   ├── main.tsx             # Entry point
-│   └── index.css            # Global styles
+│   └── index.css            # Global styles & Theme definitions
 ├── deployment.json          # Deployed contract info
 ├── package.json
 ├── vite.config.ts
