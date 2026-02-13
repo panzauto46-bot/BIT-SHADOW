@@ -222,7 +222,7 @@ trait IShadowEscrow {
 
 ## 👥 Team
 
-Built with ❤️ by **PANZ AUTO** for the Starknet Hackathon.
+Built with ❤️ by **Pandu Dargah** for the Starknet Hackathon.
 
 ---
 
