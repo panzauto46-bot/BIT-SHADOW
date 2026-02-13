@@ -87,6 +87,7 @@ BIT-SHADOW combines:
 
 ### 3. The Shadow UI — Frontend
 - **Futuristic & Dynamic Theme**: Switch between immersive **Shadow Dark** and clean **Solar Light** modes.
+- **Wallet Connect & Disconnect**: One-click connection to Argent X (Starknet) or Xverse (Bitcoin) with automatic Demo Mode fallback for seamless hackathon demos. Includes a visible Logout button once connected.
 - **Dashboard**: Real-time portfolio overview with analytics
 - **Confidential Transaction Builder**: Encrypts metadata (AES-256-GCM) client-side
 - **Real-time Tracker**: Monitors ZK-proof generation and bridge confirmations

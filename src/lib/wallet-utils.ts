@@ -14,21 +14,23 @@ export interface WalletState {
     isConnected: boolean;
 }
 
-// Starknet Connection Logic (Simplified & Permissive)
+// Helper: Add timeout to any promise so it never hangs forever
+function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
+    const timeout = new Promise<T>((resolve) => setTimeout(() => resolve(fallback), ms));
+    return Promise.race([promise, timeout]);
+}
+
+// Starknet Connection Logic
 export const connectStarknet = async (): Promise<string | null> => {
     try {
-        // Broad search for any Starknet provider
         const starknet = window.starknet || window.starknet_argentX || window.starknet_braavos;
 
         if (!starknet) {
             return null;
         }
 
-        // Try standard enable (compatible with both old and new wallets)
-        // We assume this triggers the popup
         await starknet.enable();
 
-        // Check all possible locations for the address
         if (starknet.selectedAddress) {
             return starknet.selectedAddress;
         }
@@ -36,24 +38,14 @@ export const connectStarknet = async (): Promise<string | null> => {
         if (starknet.account && starknet.account.address) {
             return starknet.account.address;
         }
-
-        // If enable() returned the address directly (some older versions)
-        // We can't easily access result here with 'await' inside try, 
-        // but selectedAddress usually gets populated.
-
-        // Last resort force check
-        if (starknet.isConnected) {
-            return starknet.selectedAddress;
-        }
-
     } catch (error) {
-        console.error("Starknet connect warning:", error);
+        console.warn("Starknet connect:", error);
     }
     return null;
 };
 
 // Bitcoin (Xverse) Connection Logic
-export const connectBitcoin = async (): Promise<string | null> => {
+const connectBitcoinRaw = (): Promise<string | null> => {
     return new Promise((resolve) => {
         try {
             const getAddressOptions = {
@@ -75,8 +67,12 @@ export const connectBitcoin = async (): Promise<string | null> => {
 
             getAddress(getAddressOptions);
         } catch (error) {
-            // Silently fail if Xverse not installed (don't break flow)
             resolve(null);
         }
     });
+};
+
+// Wrapped with 3-second timeout so it never hangs
+export const connectBitcoin = (): Promise<string | null> => {
+    return withTimeout(connectBitcoinRaw(), 3000, null);
 };

@@ -48,3 +48,5 @@ contracts/target/
 # npm
 .npm
 *.tgz
+.vercel
+.env*.local
