@@ -114,17 +114,24 @@ export function useAppStore() {
 
     if (sAddr || bAddr) {
       setWalletConnected(true);
+
       if (sAddr) {
         setWalletAddress(sAddr);
-        // In a real app we'd resolve the starknet ID using a naming service
-        setStarknetId(sAddr.substring(0, 6) + '...' + sAddr.substring(sAddr.length - 4));
+        // Display Starknet Address (or .stark name in future)
+        const shortAddr = sAddr.length > 10 ? sAddr.substring(0, 6) + '...' + sAddr.substring(sAddr.length - 4) : sAddr;
+        setStarknetId(shortAddr);
+      } else if (bAddr) {
+        // Fallback: If only Bitcoin connected, use Bitcoin address as primary ID
+        const shortBtc = bAddr.length > 10 ? bAddr.substring(0, 6) + '...' + bAddr.substring(bAddr.length - 4) : bAddr;
+        setStarknetId(shortBtc);
       }
+
       if (bAddr) {
         setBitAddress(bAddr);
         console.log("Bitcoin connected:", bAddr);
       }
     } else {
-      // Fallback for demo if no wallets found (optional, but requested "functional", so maybe alert)
+      // Fallback for demo if no wallets found
       alert("No wallets detected. Please install Argent X or Xverse.");
     }
   }, []);

@@ -17,6 +17,7 @@ export interface WalletState {
 // Starknet Connection Logic
 export const connectStarknet = async (): Promise<string | null> => {
     try {
+        // Try standard injection first
         const starknet = window.starknet || window.starknet_argentX || window.starknet_braavos;
 
         if (!starknet) {
@@ -24,12 +25,22 @@ export const connectStarknet = async (): Promise<string | null> => {
             return null;
         }
 
-        await starknet.enable();
+        // enable() returns array of addresses in standard implementations
+        const result = await starknet.enable();
 
-        // Check connection status
-        if (starknet.isConnected) {
+        if (result && Array.isArray(result) && result.length > 0) {
+            return result[0];
+        }
+
+        // Fallback for older wallets or different implementations
+        if (starknet.isConnected && starknet.selectedAddress) {
             return starknet.selectedAddress;
         }
+
+        if (starknet.account && starknet.account.address) {
+            return starknet.account.address;
+        }
+
     } catch (error) {
         console.error("Starknet connection failed:", error);
     }
