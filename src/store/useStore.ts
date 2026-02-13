@@ -131,10 +131,9 @@ export function useAppStore() {
         console.log("Bitcoin connected:", bAddr);
       }
     } else {
-      // Detailed feedback
-      const msg = `Connection Failed.\nStarknet Wallet: ${sAddr ? 'Connected' : 'Not Found/Rejected'}\nBitcoin Wallet: ${bAddr ? 'Connected' : 'Not Found/Rejected'}\n\nPlease ensure Argent X or Xverse is installed and unlocked.`;
-      alert(msg);
-      console.warn(msg);
+      // Simple fallback if no connection made
+      console.warn("No wallets connected.");
+      alert("Please ensure specific wallet (Argent X or Xverse) is installed and unlocked.");
     }
   }, []);
 
