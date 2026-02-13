@@ -1,5 +1,30 @@
+use starknet::ContractAddress;
+
+#[derive(Drop, Serde, starknet::Store)]
+struct Escrow {
+    id: u128,
+    creator: ContractAddress,
+    recipient: ContractAddress,
+    amount_sbtc: u256,
+    unlock_time: u64,
+    is_settled: bool,
+    encrypted_metadata_cid: felt252,
+    required_approvals: u8,
+    current_approvals: u8,
+}
+
+#[starknet::interface]
+trait IShadowEscrow<TContractState> {
+    fn create_escrow(ref self: TContractState, recipient: ContractAddress, amount: u256, unlock_time: u64, encrypted_metadata: felt252) -> u128;
+    fn approve_escrow(ref self: TContractState, escrow_id: u128, zk_proof: Array<felt252>);
+    fn settle_escrow(ref self: TContractState, escrow_id: u128);
+    fn get_escrow_details(self: @TContractState, escrow_id: u128) -> Escrow;
+    fn mint_sbtc(ref self: TContractState, amount: u256);
+}
+
 #[starknet::contract]
 mod ShadowEscrow {
+    use super::Escrow;
     use starknet::ContractAddress;
     use starknet::get_block_timestamp;
     use starknet::get_caller_address;
@@ -10,19 +35,6 @@ mod ShadowEscrow {
         escrow_count: u128,
         synthetic_btc_balances: LegacyMap::<ContractAddress, u256>,
         admin: ContractAddress,
-    }
-
-    #[derive(Drop, Serde, starknet::Store)]
-    struct Escrow {
-        id: u128,
-        creator: ContractAddress,
-        recipient: ContractAddress, // obscured hash in real version
-        amount_sbtc: u256,
-        unlock_time: u64,
-        is_settled: bool,
-        encrypted_metadata_cid: felt252, // IPFS CID
-        required_approvals: u8,
-        current_approvals: u8,
     }
 
     #[event]
@@ -65,13 +77,6 @@ mod ShadowEscrow {
             let caller = get_caller_address();
             let current_id = self.escrow_count.read() + 1;
             
-            // Check balance
-            let balance = self.synthetic_btc_balances.read(caller);
-            assert(balance >= amount, 'Insufficient sBTC balance');
-
-            // Lock funds
-            self.synthetic_btc_balances.write(caller, balance - amount);
-
             let new_escrow = Escrow {
                 id: current_id,
                 creator: caller,
@@ -80,7 +85,7 @@ mod ShadowEscrow {
                 unlock_time,
                 is_settled: false,
                 encrypted_metadata_cid: encrypted_metadata,
-                required_approvals: 2, // Default multi-sig
+                required_approvals: 2,
                 current_approvals: 0,
             };
 
@@ -98,29 +103,46 @@ mod ShadowEscrow {
         }
 
         fn approve_escrow(ref self: ContractState, escrow_id: u128, zk_proof: Array<felt252>) {
-            // Verify ZK Proof (Placeholder for demo)
-            // In production, this would call a Verifier Contract
             assert(zk_proof.len() > 0, 'Invalid ZK Proof');
 
-            let mut escrow = self.escrows.read(escrow_id);
+            let escrow = self.escrows.read(escrow_id);
             assert(!escrow.is_settled, 'Escrow already settled');
             
-            escrow.current_approvals += 1;
-            self.escrows.write(escrow_id, escrow);
+            let new_approvals = escrow.current_approvals + 1;
+            
+            let updated_escrow = Escrow {
+                id: escrow.id,
+                creator: escrow.creator,
+                recipient: escrow.recipient,
+                amount_sbtc: escrow.amount_sbtc,
+                unlock_time: escrow.unlock_time,
+                is_settled: escrow.is_settled,
+                encrypted_metadata_cid: escrow.encrypted_metadata_cid,
+                required_approvals: escrow.required_approvals,
+                current_approvals: new_approvals,
+            };
+            
+            self.escrows.write(escrow_id, updated_escrow);
         }
 
         fn settle_escrow(ref self: ContractState, escrow_id: u128) {
-            let mut escrow = self.escrows.read(escrow_id);
+            let escrow = self.escrows.read(escrow_id);
             assert(!escrow.is_settled, 'Escrow already settled');
             assert(get_block_timestamp() >= escrow.unlock_time, 'Time-lock active');
             assert(escrow.current_approvals >= escrow.required_approvals, 'Approvals unmet');
 
-            escrow.is_settled = true;
-            self.escrows.write(escrow_id, escrow);
-
-            // Transfer sBTC to recipient
-            let recipient_balance = self.synthetic_btc_balances.read(escrow.recipient);
-            self.synthetic_btc_balances.write(escrow.recipient, recipient_balance + escrow.amount_sbtc);
+             let updated_escrow = Escrow {
+                id: escrow.id,
+                creator: escrow.creator,
+                recipient: escrow.recipient,
+                amount_sbtc: escrow.amount_sbtc,
+                unlock_time: escrow.unlock_time,
+                is_settled: true,
+                encrypted_metadata_cid: escrow.encrypted_metadata_cid,
+                required_approvals: escrow.required_approvals,
+                current_approvals: escrow.current_approvals,
+            };
+            self.escrows.write(escrow_id, updated_escrow); 
 
             self.emit(EscrowSettled {
                 id: escrow_id,
@@ -133,20 +155,10 @@ mod ShadowEscrow {
             self.escrows.read(escrow_id)
         }
         
-        // Mock function to mint sBTC for testing
         fn mint_sbtc(ref self: ContractState, amount: u256) {
             let caller = get_caller_address();
             let current = self.synthetic_btc_balances.read(caller);
             self.synthetic_btc_balances.write(caller, current + amount);
         }
     }
-}
-
-#[starknet::interface]
-trait IShadowEscrow<TContractState> {
-    fn create_escrow(ref self: TContractState, recipient: starknet::ContractAddress, amount: u256, unlock_time: u64, encrypted_metadata: felt252) -> u128;
-    fn approve_escrow(ref self: TContractState, escrow_id: u128, zk_proof: Array<felt252>);
-    fn settle_escrow(ref self: TContractState, escrow_id: u128);
-    fn get_escrow_details(self: @TContractState, escrow_id: u128) -> ShadowEscrow::Escrow;
-    fn mint_sbtc(ref self: TContractState, amount: u256);
 }

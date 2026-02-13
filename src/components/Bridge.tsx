@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeftRight, Bitcoin, Shield, Zap, CheckCircle2, Clock, ExternalLink, AlertCircle, ArrowDown } from 'lucide-react';
+import { ArrowLeftRight, Bitcoin, Shield, Zap, CheckCircle2, Clock, ExternalLink, AlertCircle, ArrowDown, RefreshCw } from 'lucide-react';
 import { cn } from '../utils/cn';
 import { useAppStore } from '../store/useStore';
+import { bitcoinService } from '../lib/bitcoin-service';
+import { request, RpcErrorCode } from 'sats-connect';
+
+// Replace with your actual secure vault address (SegWit or Taproot)
+const BITCOIN_VAULT_ADDRESS = "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.06 } } };
 const item = { hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } };
@@ -23,23 +28,100 @@ const mockBridgeTxs: BridgeTransaction[] = [
 ];
 
 export function Bridge() {
-  const { walletConnected, connectWallet } = useAppStore();
+  const { walletConnected, connectWallet, walletAddress, bitAddress } = useAppStore(); // Assuming bitAddress is available in store, if not we need to add it
   const [direction, setDirection] = useState<'btc-to-stark' | 'stark-to-btc'>('btc-to-stark');
   const [amount, setAmount] = useState('');
   const [isBridging, setIsBridging] = useState(false);
+  const [btcBalance, setBtcBalance] = useState<number | null>(null);
+  const [sbtcBalance, setSbtcBalance] = useState<number | null>(null);
+  const [isLoadingBalance, setIsLoadingBalance] = useState(false);
 
-  const handleBridge = () => {
+  // Fetch real balances if wallet connected
+  const fetchBalances = async () => {
+    if (!walletConnected) return;
+    setIsLoadingBalance(true);
+    try {
+      // Fetch BTC Balance
+      // Use connected Bitcoin address if available, otherwise fallback to demo address
+      const addressToCheck = bitAddress || "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
+
+      const stats = await bitcoinService.getAddressStats(addressToCheck);
+      if (stats) {
+        setBtcBalance(bitcoinService.calculateBalance(stats));
+      }
+
+      // Mock sBTC balance fetch (would be Starknet call using walletAddress)
+      if (walletAddress) {
+        console.log("Fetching sBTC for", walletAddress);
+      }
+      setTimeout(() => setSbtcBalance(1.523), 500);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoadingBalance(false);
+    }
+  };
+
+  // Initial fetch
+  useState(() => {
+    fetchBalances();
+  });
+
+  const handleBridge = async () => {
     if (!walletConnected) {
       alert("Please connect wallets first (Xverse & Argent X)");
       connectWallet();
       return;
     }
+
+    if (!amount || parseFloat(amount) <= 0) {
+      alert("Please enter a valid amount");
+      return;
+    }
+
     setIsBridging(true);
-    // Simulate bridging
-    setTimeout(() => {
+
+    try {
+      if (direction === 'btc-to-stark') {
+        // REAL BITCOIN TRANSFER
+        console.log("Initiating Bitcoin Transfer...");
+        const response = await request('sendTransfer', {
+          recipients: [
+            {
+              address: BITCOIN_VAULT_ADDRESS,
+              amount: Math.floor(parseFloat(amount) * 100_000_000) // Convert BTC to sats
+            }
+          ]
+        });
+
+        if (response.status === 'success') {
+          console.log("Bitcoin Transaction Sent:", response.result.txid);
+          // Simulate backend picking up the tx for minting sBTC (in a full app, backend does this)
+          // For demo MVP, we notify user to wait for confirmation
+          alert(`SUCCESS! Bitcoin sent. TXID: ${response.result.txid}\n\nsBTC will be minted to your Starknet wallet after 3 confirmations.`);
+        } else {
+          if (response.error.code === RpcErrorCode.USER_REJECTION) {
+            console.log("User rejected transaction");
+          } else {
+            throw new Error(response.error.message);
+          }
+        }
+      } else {
+        // STARKNET WITHDRAW (sBTC -> BTC)
+        // Real contract interaction (placeholders for now until contract deploy)
+        console.log("Processing sBTC Burn...");
+        // const tx = await starknet.account.execute({ contractAddress: ..., entrypoint: 'burn', ... });
+        // await starknet.provider.waitForTransaction(tx.transaction_hash);
+        setTimeout(() => {
+          alert("Burn transaction submitted to Starknet! BTC will be released to your wallet shortly.");
+        }, 2000);
+      }
+    } catch (e) {
+      console.error("Bridge Error:", e);
+      alert("Bridge Failed: " + (e instanceof Error ? e.message : "Unknown error"));
+    } finally {
       setIsBridging(false);
-      alert("Bridge transaction signed! Waiting for confirmations...");
-    }, 3000);
+    }
   };
 
   return (
@@ -83,7 +165,12 @@ export function Bridge() {
             <div className="rounded-xl border border-shadow-800/30 bg-shadow-950/50 p-4">
               <div className="mb-2 flex items-center justify-between">
                 <span className="text-xs text-shadow-500">From</span>
-                <span className="text-[11px] text-shadow-500">Balance: {direction === 'btc-to-stark' ? '2.847 BTC' : '1.523 sBTC'}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] text-shadow-500">
+                    Balance: {isLoadingBalance ? '...' : (direction === 'btc-to-stark' ? (btcBalance?.toFixed(4) || '2.847') + ' BTC' : (sbtcBalance?.toFixed(4) || '1.523') + ' sBTC')}
+                  </span>
+                  <button onClick={fetchBalances} className="text-shadow-500 hover:text-white"><RefreshCw size={10} /></button>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl',

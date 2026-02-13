@@ -100,10 +100,11 @@ const mockStats: DashboardStats = {
 
 export function useAppStore() {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
-  const [escrows] = useState<EscrowTransaction[]>(mockEscrows);
-  const [stats] = useState<DashboardStats>(mockStats);
+  const [escrows, setEscrows] = useState<EscrowTransaction[]>(mockEscrows);
+  const [stats, setStats] = useState<DashboardStats>(mockStats);
   const [walletConnected, setWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState('');
+  const [bitAddress, setBitAddress] = useState('');
   const [starknetId, setStarknetId] = useState('');
 
   const connectWallet = useCallback(async () => {
@@ -119,7 +120,7 @@ export function useAppStore() {
         setStarknetId(sAddr.substring(0, 6) + '...' + sAddr.substring(sAddr.length - 4));
       }
       if (bAddr) {
-        // Store bitcoin address if needed in a separate state, or just log for now
+        setBitAddress(bAddr);
         console.log("Bitcoin connected:", bAddr);
       }
     } else {
@@ -131,7 +132,21 @@ export function useAppStore() {
   const disconnectWallet = useCallback(() => {
     setWalletConnected(false);
     setWalletAddress('');
+    setBitAddress('');
     setStarknetId('');
+  }, []);
+
+  const addEscrow = useCallback((newEscrow: EscrowTransaction) => {
+    // In a real app with an indexer, we might not need this as we'd re-fetch
+    // But for immediate UI feedback:
+    setEscrows(prev => [newEscrow, ...prev]);
+    // Also update stats
+    setStats(prev => ({
+      ...prev,
+      totalEscrows: prev.totalEscrows + 1,
+      activeEscrows: prev.activeEscrows + 1,
+      totalValueLocked: prev.totalValueLocked + newEscrow.amount
+    }));
   }, []);
 
   return {
@@ -141,8 +156,10 @@ export function useAppStore() {
     stats,
     walletConnected,
     walletAddress,
+    bitAddress,
     starknetId,
     connectWallet,
     disconnectWallet,
+    addEscrow
   };
 }
