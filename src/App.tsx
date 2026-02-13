@@ -68,6 +68,7 @@ export function App() {
         <Header
           walletConnected={walletConnected}
           connectWallet={connectWallet}
+          disconnectWallet={disconnectWallet}
           starknetId={starknetId}
         />
 

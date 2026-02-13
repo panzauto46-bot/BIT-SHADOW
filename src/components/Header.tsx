@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Bell, Wallet, Search, ChevronDown, Sun, Moon } from 'lucide-react';
+import { Bell, Wallet, Search, ChevronDown, Sun, Moon, LogOut } from 'lucide-react';
 
 interface HeaderProps {
   walletConnected: boolean;
   connectWallet: () => void;
+  disconnectWallet: () => void;
   starknetId: string;
 }
 
-export function Header({ walletConnected, connectWallet, starknetId }: HeaderProps) {
+export function Header({ walletConnected, connectWallet, disconnectWallet, starknetId }: HeaderProps) {
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
@@ -82,14 +83,24 @@ export function Header({ walletConnected, connectWallet, starknetId }: HeaderPro
             Connect Wallet
           </button>
         ) : (
-          <div className="flex items-center gap-2 rounded-xl border border-shadow-700/50 bg-shadow-900/50 px-4 py-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-shadow-600 to-btc-500 text-xs font-bold text-white shadow-inner">
-              S
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 rounded-xl border border-shadow-700/50 bg-shadow-900/50 px-4 py-2">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-shadow-600 to-btc-500 text-xs font-bold text-white shadow-inner">
+                S
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-white">{starknetId}</p>
+                <p className="text-[10px] text-shadow-500">Wallet Connected</p>
+              </div>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-white">{starknetId}</p>
-              <p className="text-[10px] text-shadow-500">Xverse Connected</p>
-            </div>
+
+            <button
+              onClick={disconnectWallet}
+              className="flex h-11 w-11 items-center justify-center rounded-xl border border-shadow-800/50 bg-shadow-900/30 text-shadow-400 transition-all hover:bg-red-500/20 hover:text-red-500 hover:border-red-500/30 active:scale-95"
+              title="Disconnect Wallet"
+            >
+              <LogOut size={18} />
+            </button>
           </div>
         )}
       </div>
