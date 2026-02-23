@@ -6,23 +6,26 @@
 
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-bit--shadow.vercel.app-000000?style=for-the-badge&logo=vercel)](https://bit-shadow.vercel.app)
 [![Contract](https://img.shields.io/badge/📜_Contract-Starknet_Sepolia-4A154B?style=for-the-badge)](https://sepolia.starkscan.co/contract/0x47ac31dfc225affc748b7da53e09521b3910818ee7590a4ab20436c5650ef67)
+[![Video Demo](https://img.shields.io/badge/🎬_Video_Demo-YouTube-FF0000?style=for-the-badge&logo=youtube)](https://youtu.be/xoxjxAyio5c)
 
 ![Status](https://img.shields.io/badge/Status-Live_on_Testnet-22c55e?style=flat-square)
 ![Starknet](https://img.shields.io/badge/Built_on-Starknet-4A154B?style=flat-square&logo=ethereum)
 ![Bitcoin](https://img.shields.io/badge/Secured_by-Bitcoin-F7931A?style=flat-square&logo=bitcoin)
-![Cairo](https://img.shields.io/badge/Language-Cairo-FF6B6B?style=flat-square)
-![React](https://img.shields.io/badge/Frontend-React_19-61DAFB?style=flat-square&logo=react)
-![TypeScript](https://img.shields.io/badge/Code-TypeScript-3178C6?style=flat-square&logo=typescript)
+![Cairo](https://img.shields.io/badge/Smart_Contract-Cairo-FF6B6B?style=flat-square)
+![ZK-STARKs](https://img.shields.io/badge/Privacy-ZK--STARKs-7c3aed?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
-![Hackathon](https://img.shields.io/badge/Re%7Bdefine%7D_Hackathon-2026-purple?style=flat-square)
 
 <br />
 
-**BIT-SHADOW** is a next-generation privacy protocol that bridges Bitcoin liquidity to Starknet for **confidential, trustless escrow services**. Powered by zero-knowledge proofs and client-side encryption.
+**BIT-SHADOW** is a privacy-preserving escrow protocol that bridges Bitcoin liquidity to Starknet for **confidential, trustless escrow services**. Powered by zero-knowledge proofs (STARKs) and client-side AES-256-GCM encryption.
 
 <br />
 
-[Live Demo](https://bit-shadow.vercel.app) · [View Contract](https://sepolia.starkscan.co/contract/0x47ac31dfc225affc748b7da53e09521b3910818ee7590a4ab20436c5650ef67) · [Report Bug](https://github.com/panzauto46-bot/BIT-SHADOW/issues)
+*Built for the [Re{define} Hackathon](https://dorahacks.io/hackathon/redefine/) — Privacy × Bitcoin on Starknet*
+
+<br />
+
+[Live Demo](https://bit-shadow.vercel.app) · [Video Demo](https://youtu.be/xoxjxAyio5c) · [View Contract](https://sepolia.starkscan.co/contract/0x47ac31dfc225affc748b7da53e09521b3910818ee7590a4ab20436c5650ef67) · [Report Bug](https://github.com/panzauto46-bot/BIT-SHADOW/issues)
 
 ---
 
@@ -38,7 +41,7 @@
 - [Getting Started](#-getting-started)
 - [Project Structure](#-project-structure)
 - [Smart Contract](#-smart-contract)
-- [Hackathon Tracks](#-hackathon-tracks)
+- [Hackathon Tracks](#-redefine-hackathon-tracks)
 - [Author](#-author)
 - [License](#-license)
 
@@ -66,10 +69,10 @@ Traditional escrow services suffer from critical flaws:
 
 BIT-SHADOW eliminates these issues by combining:
 
-- **Starknet ZK-Rollup** — privacy & low-cost execution
+- **Starknet ZK-Rollup** — privacy & low-cost execution via STARKs
 - **Bitcoin Security** — settlement finality & trust
 - **Client-Side Encryption** — AES-256-GCM metadata confidentiality
-- **Smart Contract Escrow** — fully trustless fund management
+- **Smart Contract Escrow** — fully trustless fund management in Cairo
 
 </td>
 </tr>
@@ -87,6 +90,7 @@ BIT-SHADOW eliminates these issues by combining:
 | **Class Hash** | `0x7fccf0cf64ff8b69515782fcf875191c87495c5e00525c8b8d5857d0217368a` |
 | **Network** | Starknet Sepolia Testnet |
 | **Contract Name** | `ShadowEscrow` |
+| **Deployed** | February 13, 2026 |
 
 ### Frontend — Vercel
 
@@ -96,88 +100,28 @@ BIT-SHADOW eliminates these issues by combining:
 | **Framework** | React 19 + Vite 7 + TypeScript |
 | **Hosting** | Vercel Edge Network |
 
+### Starknet Wallet (Prize Distribution)
+
+```
+0x5157f4f7a2425d013c329bc68ef9ec948925f756445050eff6e18211f19c75b
+```
+
 ---
 
 ## ✨ Features
 
-<table>
-<tr>
-<td align="center" width="25%">
-<br />
-<img src="https://img.icons8.com/fluency/48/lock.png" width="36" />
-<br /><br />
-<b>Confidential Escrow</b>
-<br />
-<sub>Create encrypted, time-locked escrow agreements with ZK-proof verification</sub>
-<br /><br />
-</td>
-<td align="center" width="25%">
-<br />
-<img src="https://img.icons8.com/fluency/48/bridge.png" width="36" />
-<br /><br />
-<b>BTC ↔ sBTC Bridge</b>
-<br />
-<sub>Seamless cross-chain bridge between Bitcoin and Starknet L2</sub>
-<br /><br />
-</td>
-<td align="center" width="25%">
-<br />
-<img src="https://img.icons8.com/fluency/48/visible.png" width="36" />
-<br /><br />
-<b>Privacy Shield</b>
-<br />
-<sub>Client-side AES-256-GCM encryption for transaction metadata</sub>
-<br /><br />
-</td>
-<td align="center" width="25%">
-<br />
-<img src="https://img.icons8.com/fluency/48/wallet.png" width="36" />
-<br /><br />
-<b>Multi-Wallet</b>
-<br />
-<sub>Connect Argent X, Braavos, or Xverse with one-click disconnect</sub>
-<br /><br />
-</td>
-</tr>
-<tr>
-<td align="center" width="25%">
-<br />
-<img src="https://img.icons8.com/fluency/48/paint-palette.png" width="36" />
-<br /><br />
-<b>Dynamic Theming</b>
-<br />
-<sub>Toggle between immersive Shadow Dark and clean Solar Light modes</sub>
-<br /><br />
-</td>
-<td align="center" width="25%">
-<br />
-<img src="https://img.icons8.com/fluency/48/dashboard.png" width="36" />
-<br /><br />
-<b>Real-time Dashboard</b>
-<br />
-<sub>Portfolio overview with live analytics and escrow tracking</sub>
-<br /><br />
-</td>
-<td align="center" width="25%">
-<br />
-<img src="https://img.icons8.com/fluency/48/verified-badge.png" width="36" />
-<br /><br />
-<b>ZK-Proof Engine</b>
-<br />
-<sub>STARK proof generation for privacy-preserving verification</sub>
-<br /><br />
-</td>
-<td align="center" width="25%">
-<br />
-<img src="https://img.icons8.com/fluency/48/name-tag.png" width="36" />
-<br /><br />
-<b>Starknet ID</b>
-<br />
-<sub>Human-readable .stark identity integration</sub>
-<br /><br />
-</td>
-</tr>
-</table>
+| Feature | Description |
+|---------|-------------|
+| **Confidential Escrow** | Create encrypted, time-locked escrow agreements with ZK-proof verification |
+| **BTC ↔ sBTC Bridge** | Cross-chain bridge between Bitcoin and Starknet L2 via Xverse + sats-connect |
+| **Privacy Shield** | Client-side AES-256-GCM encryption — metadata encrypted before touching the blockchain |
+| **Multi-Wallet Support** | Argent X, Braavos (Starknet) + Xverse (Bitcoin) with real wallet signing |
+| **ZK-Proof Engine** | STARK proof generation and verification for privacy-preserving transactions |
+| **Multi-Sig Approvals** | Configurable approval thresholds with ZK-proof-backed signatures |
+| **Time-Lock Mechanism** | On-chain time-lock enforcement — escrows settle only after `unlock_time` |
+| **Real-time Dashboard** | Portfolio overview with live analytics, network status, and escrow tracking |
+| **Dynamic Theming** | Shadow Dark and Solar Light modes with CSS variable-driven design system |
+| **Responsive Design** | Mobile-first layout with hamburger navigation and adaptive components |
 
 ---
 
@@ -194,27 +138,29 @@ BIT-SHADOW eliminates these issues by combining:
 │   └──────┬───────┘  └──────┬──────┘  └──────────┬──────────┘ │
 │          │                 │                     │            │
 │   ┌──────▼─────────────────▼─────────────────────▼──────────┐│
-│   │              React 19 + Vite + Tailwind CSS              ││
-│   │         Dynamic Theming · Framer Motion · Lucide         ││
+│   │            React 19 + Vite 7 + Tailwind CSS 4            ││
+│   │       Framer Motion · Lucide React · Google Fonts        ││
 │   └──────────────────────┬───────────────────────────────────┘│
 │                          │                                    │
 │   ┌──────────────────────▼───────────────────────────────────┐│
 │   │              Wallet Integration Layer                     ││
-│   │    Argent X (Starknet) · Braavos · Xverse (Bitcoin)       ││
-│   │              + Auto Demo Mode Fallback                    ││
+│   │    Argent X / Braavos (Starknet) · Xverse (Bitcoin)       ││
 │   └──────────────────────┬───────────────────────────────────┘│
 │                          │                                    │
 │   ┌──────────────────────▼───────────────────────────────────┐│
-│   │              ShadowEscrow Smart Contract                  ││
-│   │                    (Cairo / Starknet)                      ││
-│   │  ┌────────────┐ ┌──────────────┐ ┌────────────────────┐  ││
-│   │  │  create()   │ │  settle()    │ │  get_escrow_count()│  ││
-│   │  └────────────┘ └──────────────┘ └────────────────────┘  ││
+│   │        AES-256-GCM Encryption (Web Crypto API)            ││
+│   │     Client-side metadata encryption before on-chain       ││
+│   └──────────────────────┬───────────────────────────────────┘│
+│                          │                                    │
+│   ┌──────────────────────▼───────────────────────────────────┐│
+│   │         ShadowEscrow Smart Contract (Cairo)               ││
+│   │  create_escrow · approve_escrow · settle_escrow           ││
+│   │  get_escrow_details · mint_sbtc                           ││
 │   └──────────────────────┬───────────────────────────────────┘│
 │                          │                                    │
 │   ┌──────────────────────▼───────────────────────────────────┐│
 │   │           Starknet Sepolia L2 (ZK-Rollup)                 ││
-│   │              Secured by Ethereum L1                        ││
+│   │        Quantum-safe STARKs · Secured by Ethereum L1       ││
 │   └──────────────────────────────────────────────────────────┘│
 │                                                              │
 └──────────────────────────────────────────────────────────────┘
@@ -226,16 +172,17 @@ BIT-SHADOW eliminates these issues by combining:
 
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
-| **Frontend** | React 19, TypeScript, Vite 7 | UI framework & build tool |
-| **Styling** | Tailwind CSS 4, CSS Variables | Dynamic theming (Dark/Light) |
-| **Animations** | Framer Motion | Micro-interactions & transitions |
+| **Frontend** | React 19, TypeScript 5.9, Vite 7 | UI framework & build tool |
+| **Styling** | Tailwind CSS 4, CSS Variables, Google Fonts (Inter) | Dynamic theming (Dark/Light) |
+| **Animations** | Framer Motion 12 | Micro-interactions & page transitions |
 | **Icons** | Lucide React | Consistent icon system |
 | **Smart Contract** | Cairo (Starknet) | On-chain escrow logic |
 | **Build Tool** | Scarb | Cairo compilation & deployment |
-| **Wallets** | Argent X, Braavos, Xverse | Starknet & Bitcoin connectivity |
-| **Cryptography** | AES-256-GCM, ZK-STARKs | Client-side encryption & proofs |
-| **Hosting** | Vercel (Frontend), Starknet Sepolia | Production deployment |
-| **Hackathon** | Re{define} Hackathon 2026 | Privacy × Bitcoin on Starknet |
+| **Starknet SDK** | starknet.js v9.2.1 | Contract interaction & wallet integration |
+| **Bitcoin SDK** | sats-connect v4.2.1, bitcoinjs-lib v7 | Xverse wallet + Bitcoin transactions |
+| **Cryptography** | AES-256-GCM (Web Crypto API) | Client-side metadata encryption |
+| **Privacy** | ZK-STARKs (Starknet native) | Zero-knowledge proof verification |
+| **Hosting** | Vercel (Frontend), Starknet Sepolia (Contract) | Production deployment |
 
 ---
 
@@ -243,18 +190,16 @@ BIT-SHADOW eliminates these issues by combining:
 
 ### Prerequisites
 
-- **Node.js** v18 or higher
-- **npm** or **yarn**
-- [Argent X](https://www.argent.xyz/) or [Braavos](https://braavos.app/) — Starknet wallet *(optional, Demo Mode available)*
-- [Xverse](https://www.xverse.app/) — Bitcoin wallet *(optional)*
+- Node.js v18+
+- npm or yarn
+- Argent X or Braavos — Starknet wallet (optional)
+- Xverse — Bitcoin wallet (optional)
 
 ### Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/panzauto46-bot/BIT-SHADOW.git
-
-# Navigate to the project
 cd BIT-SHADOW
 
 # Install dependencies
@@ -272,50 +217,50 @@ The app will be running at `http://localhost:5173`
 npm run build
 ```
 
-Output will be in the `dist/` directory, ready for deployment.
-
 ---
 
 ## 📁 Project Structure
 
 ```
 BIT-SHADOW/
-│
 ├── contracts/                    # Cairo smart contracts
 │   ├── src/
-│   │   └── lib.cairo             # ShadowEscrow contract source
-│   ├── Scarb.toml                # Scarb configuration
+│   │   └── lib.cairo             # ShadowEscrow contract (165 lines)
+│   ├── Scarb.toml                # Scarb build configuration
 │   └── Scarb.lock
 │
 ├── src/                          # Frontend source code
 │   ├── components/
-│   │   ├── Header.tsx            # Navigation + Theme Toggle + Wallet Connect/Logout
-│   │   ├── Sidebar.tsx           # Side navigation
-│   │   ├── Dashboard.tsx         # Portfolio overview & analytics
-│   │   ├── Bridge.tsx            # BTC ↔ sBTC bridge interface
-│   │   ├── CreateEscrow.tsx      # Escrow creation wizard
-│   │   ├── EscrowList.tsx        # Escrow management list
-│   │   └── PrivacyShield.tsx     # Privacy tools & ZK-proof status
+│   │   ├── Dashboard.tsx         # Stats + ZK-Proof Engine + network panels
+│   │   ├── CreateEscrow.tsx      # Escrow creation wizard with encryption
+│   │   ├── Bridge.tsx            # BTC ↔ sBTC bridge via Xverse
+│   │   ├── EscrowList.tsx        # Escrow management & filtering
+│   │   ├── PrivacyShield.tsx     # ZK-proof visualization + encryption demo
+│   │   ├── Header.tsx            # Search + theme toggle + wallet connect
+│   │   └── Sidebar.tsx           # Navigation + wallet status
 │   │
 │   ├── lib/
-│   │   ├── wallet-utils.ts       # Wallet connection logic (Starknet + Bitcoin + Demo Mode)
-│   │   └── bitcoin-service.ts    # Bitcoin service integration
+│   │   ├── wallet-utils.ts       # Argent X / Braavos / Xverse connection
+│   │   └── bitcoin-service.ts    # Mempool.space API integration
 │   │
 │   ├── store/
-│   │   └── useStore.ts           # Global state management
+│   │   └── useStore.ts           # Global state management (React hooks)
 │   │
-│   ├── types/                    # TypeScript type definitions
-│   ├── utils/                    # Utility functions
+│   ├── utils/
+│   │   ├── encryption.ts         # AES-256-GCM encrypt/decrypt (Web Crypto API)
+│   │   ├── constants.ts          # Contract address
+│   │   └── cn.ts                 # Tailwind class merge utility
 │   │
-│   ├── App.tsx                   # Main application component
+│   ├── types/index.ts            # TypeScript interfaces
+│   ├── App.tsx                   # Main layout + mobile responsive
 │   ├── main.tsx                  # Entry point
-│   └── index.css                 # Global styles & CSS theme variables
+│   └── index.css                 # Design system + animations
 │
 ├── deployment.json               # Deployed contract metadata
 ├── package.json                  # Dependencies & scripts
 ├── vite.config.ts                # Vite configuration
-├── tailwind.config.js            # Tailwind CSS configuration
-└── README.md                     # You are here!
+├── tsconfig.json                 # TypeScript configuration
+└── README.md
 ```
 
 ---
@@ -340,7 +285,6 @@ struct Escrow {
 
 #[starknet::interface]
 trait IShadowEscrow<TContractState> {
-    /// Create a new escrow with encrypted metadata
     fn create_escrow(
         ref self: TContractState,
         recipient: ContractAddress,
@@ -349,43 +293,37 @@ trait IShadowEscrow<TContractState> {
         encrypted_metadata: felt252
     ) -> u128;
 
-    /// Approve escrow with ZK-proof verification
     fn approve_escrow(
         ref self: TContractState,
         escrow_id: u128,
         zk_proof: Array<felt252>
     );
 
-    /// Settle escrow after time-lock + approval requirements
     fn settle_escrow(ref self: TContractState, escrow_id: u128);
 
-    /// Query escrow details by ID
     fn get_escrow_details(self: @TContractState, escrow_id: u128) -> Escrow;
 
-    /// Mint synthetic BTC (sBTC) on Starknet L2
     fn mint_sbtc(ref self: TContractState, amount: u256);
 }
 ```
 
-### Key Features
+### Contract Features
 
-| Feature | Description |
-|---------|-------------|
-| **Encrypted Metadata** | Each escrow stores an `encrypted_metadata_cid` (AES-256-GCM encrypted pointer) |
-| **Multi-Sig Approvals** | Configurable `required_approvals` threshold with ZK-proof verification |
-| **Time-Lock** | Escrows cannot be settled before `unlock_time` (Unix timestamp) |
-| **sBTC Minting** | Synthetic BTC balances tracked per-address on Starknet L2 |
+| Feature | Implementation |
+|---------|---------------|
+| **Encrypted Metadata** | `encrypted_metadata_cid` stores AES-256-GCM encrypted pointer on-chain |
+| **Multi-Sig Approvals** | `required_approvals` threshold with `approve_escrow()` + ZK-proof param |
+| **Time-Lock** | `settle_escrow()` enforces `get_block_timestamp() >= unlock_time` |
+| **sBTC Minting** | `mint_sbtc()` tracks synthetic BTC balances per-address on L2 |
 
 ### Events
 
-| Event | Description |
-|-------|-------------|
-| `EscrowCreated` | Emitted with `id`, `creator`, `amount`, and `unlock_time` |
-| `EscrowSettled` | Emitted with `id`, `recipient`, and `amount` |
+| Event | Fields |
+|-------|--------|
+| `EscrowCreated` | `id`, `creator`, `amount`, `unlock_time` |
+| `EscrowSettled` | `id`, `recipient`, `amount` |
 
-### Verify on Explorer
-
-🔍 [View on Starkscan (Sepolia)](https://sepolia.starkscan.co/contract/0x47ac31dfc225affc748b7da53e09521b3910818ee7590a4ab20436c5650ef67)
+🔍 [View on Starkscan](https://sepolia.starkscan.co/contract/0x47ac31dfc225affc748b7da53e09521b3910818ee7590a4ab20436c5650ef67)
 
 ---
 
@@ -393,15 +331,15 @@ trait IShadowEscrow<TContractState> {
 
 | Step | Action | Expected Result |
 |------|--------|----------------|
-| 1 | Click **Connect Wallet** | Wallet address appears in header with Logout button |
-| 2 | Navigate to **Bridge** tab | BTC ↔ sBTC bridge interface loads |
-| 3 | Navigate to **Create Escrow** | Escrow creation form with encryption & ZK options |
+| 1 | Click **Connect Wallet** | Argent X/Braavos/Xverse connects |
+| 2 | Navigate to **Bridge** | BTC ↔ sBTC bridge interface loads |
+| 3 | Navigate to **Create Escrow** | Multi-step form with encryption & ZK options |
 | 4 | Toggle **Encrypted Metadata** | AES-256-GCM encryption activates |
-| 5 | Toggle **ZK-Proof** | ZK proof generation simulation starts |
-| 6 | Click **Deploy Shadow Escrow** | Transaction signed and submitted |
-| 7 | Check **Dashboard** | New escrow appears in the list |
-| 8 | Click **Logout** button | Wallet disconnects, returns to Connect state |
-| 9 | Toggle 🌙/☀️ theme | Interface switches between Dark and Light modes |
+| 5 | Toggle **ZK-Proof** | ZK proof generation starts |
+| 6 | Click **Deploy Shadow Escrow** | Transaction signed via wallet |
+| 7 | Check **Dashboard** | New escrow appears with live stats |
+| 8 | Click **Logout** | Wallet disconnects cleanly |
+| 9 | Toggle 🌙/☀️ | Theme switches Dark ↔ Light |
 
 ---
 
@@ -411,20 +349,20 @@ trait IShadowEscrow<TContractState> {
 <tr>
 <td align="center" width="33%">
 <br />
-<h3>🔐 Privacy Track</h3>
-<sub>ZK-powered confidential escrow with client-side AES-256-GCM encryption and STARK proof verification. All transaction metadata is encrypted before touching the blockchain.</sub>
+<h3>🔒 Privacy Track</h3>
+<sub>Privacy-preserving escrow using STARKs and confidential transactions. All metadata is encrypted client-side with AES-256-GCM before touching the blockchain. ZK-proofs verify escrow conditions without revealing underlying data.</sub>
 <br /><br />
 </td>
 <td align="center" width="33%">
 <br />
 <h3>₿ Bitcoin Track</h3>
-<sub>BTC ↔ sBTC bridge with Xverse wallet support, real Bitcoin transactions via sats-connect, and cross-chain settlement on Starknet L2.</sub>
+<sub>BTC-native DeFi leveraging Starknet's security. Shadow Bridge enables BTC ↔ sBTC bridging via Xverse wallet and sats-connect SDK. Real Bitcoin transactions with cross-chain settlement on Starknet L2.</sub>
 <br /><br />
 </td>
 <td align="center" width="33%">
 <br />
 <h3>🚀 Wildcard Track</h3>
-<sub>Innovative escrow-as-a-service platform on Starknet — trustless fund management eliminating intermediaries through smart contracts.</sub>
+<sub>Innovative escrow-as-a-service on Starknet. Trustless fund management with multi-sig approvals, time-locks, and encrypted metadata — eliminating intermediaries through Cairo smart contracts.</sub>
 <br /><br />
 </td>
 </tr>
@@ -461,13 +399,15 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 <div align="center">
 <br />
 
-**Built with 🖤 for the Re{define} Hackathon 2026 — Privacy × Bitcoin on Starknet**
+**Built for the [Re{define} Hackathon](https://dorahacks.io/hackathon/redefine/) — Privacy × Bitcoin on Starknet**
+
+*Backed by Starknet Foundation · StarkWare · OpenZeppelin · Xverse*
 
 <br />
 
 ![Starknet](https://img.shields.io/badge/Starknet-4A154B?style=for-the-badge&logo=ethereum&logoColor=white)
 ![Bitcoin](https://img.shields.io/badge/Bitcoin-F7931A?style=for-the-badge&logo=bitcoin&logoColor=white)
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Cairo](https://img.shields.io/badge/Cairo-FF6B6B?style=for-the-badge)
+![ZK-STARKs](https://img.shields.io/badge/ZK--STARKs-7c3aed?style=for-the-badge)
 
 </div>
