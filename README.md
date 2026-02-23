@@ -14,6 +14,7 @@
 ![React](https://img.shields.io/badge/Frontend-React_19-61DAFB?style=flat-square&logo=react)
 ![TypeScript](https://img.shields.io/badge/Code-TypeScript-3178C6?style=flat-square&logo=typescript)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
+![Hackathon](https://img.shields.io/badge/Re%7Bdefine%7D_Hackathon-2026-purple?style=flat-square)
 
 <br />
 
@@ -232,8 +233,9 @@ BIT-SHADOW eliminates these issues by combining:
 | **Smart Contract** | Cairo (Starknet) | On-chain escrow logic |
 | **Build Tool** | Scarb | Cairo compilation & deployment |
 | **Wallets** | Argent X, Braavos, Xverse | Starknet & Bitcoin connectivity |
-| **Cryptography** | AES-256-GCM, ZK-SNARKs | Client-side encryption & proofs |
+| **Cryptography** | AES-256-GCM, ZK-STARKs | Client-side encryption & proofs |
 | **Hosting** | Vercel (Frontend), Starknet Sepolia | Production deployment |
+| **Hackathon** | Re{define} Hackathon 2026 | Privacy × Bitcoin on Starknet |
 
 ---
 
@@ -376,26 +378,26 @@ trait IShadowEscrow<TContractState> {
 
 ---
 
-## 🏆 Hackathon Tracks
+## 🏆 Re{define} Hackathon Tracks
 
 <table>
 <tr>
 <td align="center" width="33%">
 <br />
 <h3>🔐 Privacy Track</h3>
-<sub>ZK-powered confidential escrow with client-side AES-256-GCM encryption and STARK proof verification</sub>
+<sub>ZK-powered confidential escrow with client-side AES-256-GCM encryption and STARK proof verification. All transaction metadata is encrypted before touching the blockchain.</sub>
 <br /><br />
 </td>
 <td align="center" width="33%">
 <br />
-<h3>₿ Bitcoin Integration</h3>
-<sub>BTC ↔ sBTC bridge with Xverse wallet support and cross-chain settlement</sub>
+<h3>₿ Bitcoin Track</h3>
+<sub>BTC ↔ sBTC bridge with Xverse wallet support, real Bitcoin transactions via sats-connect, and cross-chain settlement on Starknet L2.</sub>
 <br /><br />
 </td>
 <td align="center" width="33%">
 <br />
-<h3>💡 DeFi Innovation</h3>
-<sub>Trustless escrow service eliminating intermediaries through smart contracts</sub>
+<h3>🚀 Wildcard Track</h3>
+<sub>Innovative escrow-as-a-service platform on Starknet — trustless fund management eliminating intermediaries through smart contracts.</sub>
 <br /><br />
 </td>
 </tr>
@@ -432,7 +434,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 <div align="center">
 <br />
 
-**Built with 🖤 for the Starknet Hackathon**
+**Built with 🖤 for the Re{define} Hackathon 2026 — Privacy × Bitcoin on Starknet**
 
 <br />
 

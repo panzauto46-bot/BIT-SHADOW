@@ -1,4 +1,4 @@
-import { LayoutDashboard, PlusCircle, List, ArrowLeftRight, Shield, LogOut, Bitcoin } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, List, ArrowLeftRight, Shield, LogOut, Bitcoin, Sparkles } from 'lucide-react';
 import type { TabType } from '../types';
 import { cn } from '../utils/cn';
 
@@ -10,9 +10,9 @@ interface SidebarProps {
   disconnectWallet: () => void;
 }
 
-const navItems: { id: TabType; label: string; icon: React.ReactNode }[] = [
+const navItems: { id: TabType; label: string; icon: React.ReactNode; badge?: string }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
-  { id: 'create', label: 'Create Escrow', icon: <PlusCircle size={20} /> },
+  { id: 'create', label: 'Create Escrow', icon: <PlusCircle size={20} />, badge: 'NEW' },
   { id: 'escrows', label: 'My Escrows', icon: <List size={20} /> },
   { id: 'bridge', label: 'BTC Bridge', icon: <ArrowLeftRight size={20} /> },
   { id: 'privacy', label: 'Privacy Shield', icon: <Shield size={20} /> },
@@ -23,7 +23,7 @@ export function Sidebar({ activeTab, setActiveTab, walletConnected, starknetId, 
     <aside className="fixed left-0 top-0 z-40 flex h-full w-64 flex-col border-r border-shadow-800/50 bg-shadow-950/95 backdrop-blur-xl">
       {/* Logo */}
       <div className="flex items-center gap-3 border-b border-shadow-800/50 px-6 py-5">
-        <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-shadow-600 to-btc-500">
+        <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-shadow-600 to-btc-500 shadow-lg shadow-shadow-600/20">
           <Bitcoin size={22} className="text-white" />
           <div className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-shadow-950 bg-vault-green" />
         </div>
@@ -37,17 +37,22 @@ export function Sidebar({ activeTab, setActiveTab, walletConnected, starknetId, 
 
       {/* Navigation */}
       <nav className="flex-1 space-y-1 px-3 py-4">
+        <p className="mb-2 px-4 text-[9px] font-bold uppercase tracking-[0.2em] text-shadow-600">Navigation</p>
         {navItems.map((item) => (
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id)}
             className={cn(
-              'group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200',
+              'group relative flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200',
               activeTab === item.id
                 ? 'bg-gradient-to-r from-shadow-700/80 to-shadow-800/40 text-white shadow-lg shadow-shadow-900/50'
                 : 'text-shadow-400 hover:bg-shadow-900/50 hover:text-white'
             )}
           >
+            {/* Active indicator bar */}
+            {activeTab === item.id && (
+              <div className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-r-full bg-btc-500" />
+            )}
             <span className={cn(
               'transition-colors',
               activeTab === item.id ? 'text-btc-500' : 'text-shadow-500 group-hover:text-shadow-400'
@@ -55,12 +60,28 @@ export function Sidebar({ activeTab, setActiveTab, walletConnected, starknetId, 
               {item.icon}
             </span>
             {item.label}
-            {activeTab === item.id && (
+            {item.badge && (
+              <span className="ml-auto rounded-md bg-btc-500/10 px-1.5 py-0.5 text-[8px] font-bold uppercase text-btc-500">
+                {item.badge}
+              </span>
+            )}
+            {activeTab === item.id && !item.badge && (
               <div className="ml-auto h-2 w-2 rounded-full bg-btc-500 shadow-lg shadow-btc-500/50" />
             )}
           </button>
         ))}
       </nav>
+
+      {/* Hackathon Banner */}
+      <div className="mx-3 mb-3 overflow-hidden rounded-xl border border-shadow-700/30 bg-gradient-to-br from-shadow-800/60 to-shadow-900/60 p-3">
+        <div className="flex items-center gap-2 mb-1">
+          <Sparkles size={12} className="text-btc-500" />
+          <span className="text-[9px] font-bold uppercase tracking-wider text-btc-500">Re{'{'} define {'}'} Hackathon</span>
+        </div>
+        <p className="text-[10px] text-shadow-400">
+          Privacy × Bitcoin on Starknet
+        </p>
+      </div>
 
       {/* Wallet Status */}
       {walletConnected && (
@@ -73,7 +94,7 @@ export function Sidebar({ activeTab, setActiveTab, walletConnected, starknetId, 
           <p className="text-[10px] text-shadow-500">Starknet Sepolia</p>
           <button
             onClick={disconnectWallet}
-            className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-vault-red/30 py-2 text-xs text-vault-red transition-colors hover:bg-vault-red/10"
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-vault-red/30 py-2 text-xs text-vault-red transition-all hover:bg-vault-red/10 active:scale-[0.98]"
           >
             <LogOut size={12} />
             Disconnect

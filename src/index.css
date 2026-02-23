@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  /* Default Dark Mode (Unchanged) */
+  /* Default Dark Mode */
   --shadow-950: #0a0412;
   --shadow-900: #12082a;
   --shadow-800: #1a0e3e;
@@ -10,11 +12,11 @@
   --shadow-500: #7c3aed;
   --shadow-400: #a78bfa;
   --shadow-300: #c4b5fd;
-  
+
   --btc-500: #f7931a;
   --btc-400: #ffa94d;
   --btc-600: #e07800;
-  
+
   --vault-green: #22c55e;
   --vault-red: #ef4444;
   --vault-blue: #3b82f6;
@@ -26,18 +28,15 @@
 
 /* Light Mode Overrides */
 :root.light {
-  /* Inverted Shadow Palette for Light Mode */
-  --shadow-950: #ffffff;      /* Main BG */
-  --shadow-900: #f3f4f6;      /* Card BG (gray-100) */
-  --shadow-800: #e5e7eb;      /* Border (gray-200) */
-  --shadow-700: #d1d5db;      /* Muted Text (gray-300) */
-  --shadow-600: #9ca3af;      /* Secondary Text */
-  --shadow-500: #7c3aed;      /* Brand Primary (Keep Purple) */
-  --shadow-400: #6d28d9;      /* Darker Purple for text */
-  --shadow-300: #4b5563;      /* Main Text (gray-600) */
-
-  /* Text Colors Override */
-  --text-primary: #111827;    /* Near Black */
+  --shadow-950: #ffffff;
+  --shadow-900: #f3f4f6;
+  --shadow-800: #e5e7eb;
+  --shadow-700: #d1d5db;
+  --shadow-600: #9ca3af;
+  --shadow-500: #7c3aed;
+  --shadow-400: #6d28d9;
+  --shadow-300: #4b5563;
+  --text-primary: #111827;
 }
 
 @theme {
@@ -49,14 +48,21 @@
   --color-shadow-500: var(--shadow-500);
   --color-shadow-400: var(--shadow-400);
   --color-shadow-300: var(--shadow-300);
-  
+
   --color-btc-500: var(--btc-500);
   --color-btc-400: var(--btc-400);
   --color-btc-600: var(--btc-600);
-  
+
   --color-vault-green: var(--vault-green);
   --color-vault-red: var(--vault-red);
   --color-vault-blue: var(--vault-blue);
+}
+
+/* Apply Inter font globally */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Force Text Color Swap in Light Mode */
@@ -64,41 +70,229 @@
   :root.light .text-white {
     color: var(--text-primary) !important;
   }
-  
-  /* Handle semi-transparent white text */
+
   :root.light .text-white\/80 {
     color: rgba(17, 24, 39, 0.8) !important;
   }
 }
 
+/* ===== Premium Animations ===== */
+
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(124, 58, 237, 0.3), 0 0 10px rgba(124, 58, 237, 0.1); }
-  50% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.6), 0 0 40px rgba(124, 58, 237, 0.3); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(124, 58, 237, 0.3), 0 0 10px rgba(124, 58, 237, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.6), 0 0 40px rgba(124, 58, 237, 0.3);
+  }
 }
 
 @keyframes shield-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes scan-line {
-  0% { top: 0%; }
-  100% { top: 100%; }
+  0% {
+    top: 0%;
+  }
+
+  100% {
+    top: 100%;
+  }
 }
 
-.animate-float { animation: float 3s ease-in-out infinite; }
-.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
-.animate-shield-rotate { animation: shield-rotate 8s linear infinite; }
-.animate-scan-line { animation: scan-line 2s linear infinite; }
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--shadow-950); }
-::-webkit-scrollbar-thumb { background: var(--shadow-600); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--shadow-500); }
+  100% {
+    background-position: 200% 0;
+  }
+}
 
-* { scrollbar-width: thin; scrollbar-color: var(--shadow-600) var(--shadow-950); }
+@keyframes gradient-shift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes border-glow {
+
+  0%,
+  100% {
+    border-color: rgba(124, 58, 237, 0.2);
+  }
+
+  50% {
+    border-color: rgba(124, 58, 237, 0.5);
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-shield-rotate {
+  animation: shield-rotate 8s linear infinite;
+}
+
+.animate-scan-line {
+  animation: scan-line 2s linear infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.4s ease-out;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: border-glow 2s ease-in-out infinite;
+}
+
+/* ===== Glassmorphism Utilities ===== */
+
+.glass-card {
+  background: rgba(18, 8, 42, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.glass-card-hover:hover {
+  background: rgba(18, 8, 42, 0.75);
+  border-color: rgba(124, 58, 237, 0.25);
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.08);
+}
+
+/* ===== Premium Scrollbar ===== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--shadow-700);
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--shadow-500);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--shadow-700) transparent;
+}
+
+/* ===== Focus & Selection ===== */
+
+::selection {
+  background: rgba(124, 58, 237, 0.3);
+  color: white;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* ===== Transition Utilities ===== */
+
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Responsive Adjustments ===== */
+
+@media (max-width: 1024px) {
+  .sidebar-mobile-hidden {
+    transform: translateX(-100%);
+  }
+}

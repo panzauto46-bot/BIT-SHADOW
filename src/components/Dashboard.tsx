@@ -1,4 +1,4 @@
-import { Lock, Activity, Bitcoin, CheckCircle2, ShieldCheck, TrendingUp, ArrowUpRight, ArrowDownRight, Zap, Eye } from 'lucide-react';
+import { Lock, Activity, Bitcoin, CheckCircle2, ShieldCheck, TrendingUp, ArrowUpRight, ArrowDownRight, Zap, Eye, Shield, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { DashboardStats, EscrowTransaction } from '../types';
 import { cn } from '../utils/cn';
@@ -15,30 +15,42 @@ const container = {
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' as const } },
 };
 
 function StatCard({ icon, label, value, sub, color, trend }: {
   icon: React.ReactNode; label: string; value: string; sub: string; color: string; trend?: 'up' | 'down';
 }) {
   return (
-    <motion.div variants={item} className="group rounded-2xl border border-shadow-800/50 bg-gradient-to-br from-shadow-900/80 to-shadow-950/80 p-5 transition-all hover:border-shadow-700/50 hover:shadow-lg hover:shadow-shadow-900/30">
-      <div className="mb-3 flex items-center justify-between">
-        <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl', color)}>
-          {icon}
-        </div>
-        {trend && (
-          <div className={cn('flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold',
-            trend === 'up' ? 'bg-vault-green/10 text-vault-green' : 'bg-vault-red/10 text-vault-red'
-          )}>
-            {trend === 'up' ? <ArrowUpRight size={10} /> : <ArrowDownRight size={10} />}
-            {trend === 'up' ? '+12.5%' : '-3.2%'}
-          </div>
-        )}
+    <motion.div
+      variants={item}
+      whileHover={{ scale: 1.02, y: -2 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      className="group relative overflow-hidden rounded-2xl border border-shadow-800/50 bg-gradient-to-br from-shadow-900/80 to-shadow-950/80 p-5 transition-all hover:border-shadow-700/50 hover:shadow-lg hover:shadow-shadow-900/30"
+    >
+      {/* Subtle shimmer effect on hover */}
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-shadow-600/5 to-transparent animate-shimmer" />
       </div>
-      <p className="text-2xl font-bold text-white">{value}</p>
-      <p className="text-xs text-shadow-400">{label}</p>
-      <p className="mt-1 text-[10px] text-shadow-600">{sub}</p>
+
+      <div className="relative z-10">
+        <div className="mb-3 flex items-center justify-between">
+          <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl shadow-lg', color)}>
+            {icon}
+          </div>
+          {trend && (
+            <div className={cn('flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold',
+              trend === 'up' ? 'bg-vault-green/10 text-vault-green' : 'bg-vault-red/10 text-vault-red'
+            )}>
+              {trend === 'up' ? <ArrowUpRight size={10} /> : <ArrowDownRight size={10} />}
+              {trend === 'up' ? '+12.5%' : '-3.2%'}
+            </div>
+          )}
+        </div>
+        <p className="text-2xl font-bold text-white">{value}</p>
+        <p className="text-xs text-shadow-400">{label}</p>
+        <p className="mt-1 text-[10px] text-shadow-600">{sub}</p>
+      </div>
     </motion.div>
   );
 }
@@ -53,7 +65,10 @@ function MiniEscrowRow({ escrow }: { escrow: EscrowTransaction }) {
   };
 
   return (
-    <div className="flex items-center justify-between rounded-xl border border-shadow-800/30 bg-shadow-900/30 px-4 py-3 transition-all hover:border-shadow-700/50 hover:bg-shadow-900/50">
+    <motion.div
+      whileHover={{ x: 4 }}
+      className="flex items-center justify-between rounded-xl border border-shadow-800/30 bg-shadow-900/30 px-4 py-3 transition-all hover:border-shadow-700/50 hover:bg-shadow-900/50 cursor-pointer"
+    >
       <div className="flex items-center gap-3">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-shadow-800/50">
           {escrow.zkProofVerified ? (
@@ -71,11 +86,13 @@ function MiniEscrowRow({ escrow }: { escrow: EscrowTransaction }) {
         <div className="text-right">
           <p className="text-sm font-semibold text-btc-400">{escrow.amount} BTC</p>
           <div className="mt-0.5 h-1.5 w-20 overflow-hidden rounded-full bg-shadow-800">
-            <div
+            <motion.div
               className={cn('h-full rounded-full transition-all',
                 escrow.status === 'settled' ? 'bg-vault-green' : escrow.status === 'disputed' ? 'bg-vault-red' : 'bg-gradient-to-r from-shadow-500 to-btc-500'
               )}
-              style={{ width: `${escrow.progress}%` }}
+              initial={{ width: 0 }}
+              animate={{ width: `${escrow.progress}%` }}
+              transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
             />
           </div>
         </div>
@@ -83,7 +100,7 @@ function MiniEscrowRow({ escrow }: { escrow: EscrowTransaction }) {
           {escrow.status}
         </span>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -91,28 +108,40 @@ export function Dashboard({ stats, escrows }: DashboardProps) {
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-6">
       {/* Welcome Banner */}
-      <motion.div variants={item} className="relative overflow-hidden rounded-2xl border border-shadow-700/30 bg-gradient-to-r from-shadow-800/80 via-shadow-900/60 to-shadow-950/80 p-6">
+      <motion.div variants={item} className="relative overflow-hidden rounded-2xl border border-shadow-700/30 bg-gradient-to-r from-shadow-800/80 via-shadow-900/60 to-shadow-950/80 p-6 sm:p-8">
         <div className="relative z-10">
-          <div className="mb-1 flex items-center gap-2">
+          <div className="mb-2 flex items-center gap-2">
             <Zap size={16} className="text-btc-500" />
             <span className="text-xs font-semibold uppercase tracking-wider text-btc-500">Shadow Protocol Active</span>
           </div>
-          <h2 className="mb-1 text-2xl font-bold text-white">Welcome to BIT-SHADOW</h2>
-          <p className="max-w-lg text-sm text-shadow-400">
-            Your confidential Bitcoin escrow powered by Starknet's zero-knowledge proofs. 
+          <h2 className="mb-2 text-2xl sm:text-3xl font-bold text-white">Welcome to BIT-SHADOW</h2>
+          <p className="max-w-lg text-sm text-shadow-400 leading-relaxed">
+            Your confidential Bitcoin escrow powered by Starknet's zero-knowledge proofs.
             All transactions are encrypted and privacy-preserved.
           </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1 rounded-full bg-shadow-800/60 px-3 py-1 text-[10px] font-medium text-shadow-300 border border-shadow-700/30">
+              <Shield size={10} className="text-shadow-400" /> ZK-Powered
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-btc-500/10 px-3 py-1 text-[10px] font-medium text-btc-400 border border-btc-500/20">
+              <Bitcoin size={10} /> Bitcoin Native
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-vault-green/10 px-3 py-1 text-[10px] font-medium text-vault-green border border-vault-green/20">
+              <CheckCircle2 size={10} /> Testnet Live
+            </span>
+          </div>
         </div>
         {/* Decorative elements */}
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br from-shadow-600/20 to-btc-500/10 blur-3xl" />
         <div className="absolute -bottom-10 right-20 h-32 w-32 rounded-full bg-gradient-to-br from-btc-500/10 to-shadow-500/5 blur-2xl" />
-        <div className="absolute right-8 top-6 opacity-10">
+        <div className="absolute right-8 top-6 opacity-10 hidden sm:block">
           <Bitcoin size={100} className="text-btc-500" />
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-shadow-500/20 to-transparent" />
       </motion.div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
         <StatCard
           icon={<Lock size={18} className="text-white" />}
           label="Total Escrows"
@@ -161,7 +190,7 @@ export function Dashboard({ stats, escrows }: DashboardProps) {
               <h3 className="text-lg font-semibold text-white">Recent Escrows</h3>
               <p className="text-xs text-shadow-500">Latest confidential transactions</p>
             </div>
-            <button className="flex items-center gap-1 rounded-lg bg-shadow-800/50 px-3 py-1.5 text-xs font-medium text-shadow-300 transition-colors hover:bg-shadow-700/50">
+            <button className="flex items-center gap-1 rounded-lg bg-shadow-800/50 px-3 py-1.5 text-xs font-medium text-shadow-300 transition-all hover:bg-shadow-700/50 active:scale-95">
               <Eye size={12} />
               View All
             </button>
@@ -192,7 +221,7 @@ export function Dashboard({ stats, escrows }: DashboardProps) {
                 />
               </div>
               <p className="text-[10px] text-shadow-600">87% of transactions ZK-verified</p>
-              
+
               <div className="mt-3 space-y-2">
                 {['STARK proof verified', 'Merkle root updated', 'Privacy shield active'].map((log, i) => (
                   <div key={i} className="flex items-center gap-2 rounded-lg bg-shadow-800/30 px-3 py-2">
@@ -206,7 +235,10 @@ export function Dashboard({ stats, escrows }: DashboardProps) {
 
           {/* Bitcoin Network */}
           <div className="rounded-2xl border border-shadow-800/50 bg-shadow-900/30 p-5">
-            <h3 className="mb-3 text-sm font-semibold text-white">Bitcoin Network</h3>
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-white">Bitcoin Network</h3>
+              <span className="rounded-full bg-btc-500/10 px-2 py-0.5 text-[9px] font-semibold text-btc-500">LIVE</span>
+            </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-shadow-400">Block Height</span>
@@ -229,7 +261,10 @@ export function Dashboard({ stats, escrows }: DashboardProps) {
 
           {/* Starknet Status */}
           <div className="rounded-2xl border border-shadow-800/50 bg-shadow-900/30 p-5">
-            <h3 className="mb-3 text-sm font-semibold text-white">Starknet Protocol</h3>
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-white">Starknet Protocol</h3>
+              <span className="rounded-full bg-vault-green/10 px-2 py-0.5 text-[9px] font-semibold text-vault-green">VERIFIED</span>
+            </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-shadow-400">L2 Block</span>
@@ -247,10 +282,19 @@ export function Dashboard({ stats, escrows }: DashboardProps) {
                 </div>
               </div>
             </div>
-            <div className="mt-3 flex items-center gap-2">
+            <div className="mt-3 flex items-center gap-2 rounded-lg bg-shadow-800/20 px-3 py-2">
               <TrendingUp size={12} className="text-vault-green" />
               <span className="text-[10px] text-vault-green">Network healthy • 99.9% uptime</span>
             </div>
+            <a
+              href="https://sepolia.starkscan.co/contract/0x47ac31dfc225affc748b7da53e09521b3910818ee7590a4ab20436c5650ef67"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center gap-1 text-[10px] text-shadow-500 hover:text-shadow-300 transition-colors"
+            >
+              <ExternalLink size={10} />
+              View Contract on Starkscan
+            </a>
           </div>
         </motion.div>
       </div>
