@@ -322,39 +322,66 @@ BIT-SHADOW/
 
 ## 📜 Smart Contract
 
-### ShadowEscrow Interface
+### ShadowEscrow — Deployed on Starknet Sepolia
 
 ```cairo
+#[derive(Drop, Serde, starknet::Store)]
+struct Escrow {
+    id: u128,
+    creator: ContractAddress,
+    recipient: ContractAddress,
+    amount_sbtc: u256,
+    unlock_time: u64,
+    is_settled: bool,
+    encrypted_metadata_cid: felt252,
+    required_approvals: u8,
+    current_approvals: u8,
+}
+
 #[starknet::interface]
 trait IShadowEscrow<TContractState> {
-    /// Create a new escrow with specified amount and unlock time
+    /// Create a new escrow with encrypted metadata
     fn create_escrow(
         ref self: TContractState,
+        recipient: ContractAddress,
         amount: u256,
-        unlock_time: u64
+        unlock_time: u64,
+        encrypted_metadata: felt252
     ) -> u128;
 
-    /// Settle an escrow by releasing funds to the recipient
-    fn settle_escrow(
+    /// Approve escrow with ZK-proof verification
+    fn approve_escrow(
         ref self: TContractState,
         escrow_id: u128,
-        recipient: ContractAddress
+        zk_proof: Array<felt252>
     );
 
-    /// Get total number of escrows created
-    fn get_escrow_count(self: @TContractState) -> u128;
+    /// Settle escrow after time-lock + approval requirements
+    fn settle_escrow(ref self: TContractState, escrow_id: u128);
 
-    /// Get the admin address
-    fn get_admin(self: @TContractState) -> ContractAddress;
+    /// Query escrow details by ID
+    fn get_escrow_details(self: @TContractState, escrow_id: u128) -> Escrow;
+
+    /// Mint synthetic BTC (sBTC) on Starknet L2
+    fn mint_sbtc(ref self: TContractState, amount: u256);
 }
 ```
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Encrypted Metadata** | Each escrow stores an `encrypted_metadata_cid` (AES-256-GCM encrypted pointer) |
+| **Multi-Sig Approvals** | Configurable `required_approvals` threshold with ZK-proof verification |
+| **Time-Lock** | Escrows cannot be settled before `unlock_time` (Unix timestamp) |
+| **sBTC Minting** | Synthetic BTC balances tracked per-address on Starknet L2 |
 
 ### Events
 
 | Event | Description |
 |-------|-------------|
-| `EscrowCreated` | Emitted when a new escrow is created with ID, amount, and creator |
-| `EscrowSettled` | Emitted when an escrow is settled with ID and recipient |
+| `EscrowCreated` | Emitted with `id`, `creator`, `amount`, and `unlock_time` |
+| `EscrowSettled` | Emitted with `id`, `recipient`, and `amount` |
 
 ### Verify on Explorer
 
